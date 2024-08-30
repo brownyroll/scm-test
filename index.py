@@ -3,7 +3,7 @@ def notifyLINE(status) {
     def jobName = env.JOB_NAME
     def buildNo = env.BUILD_NUMBER
     def url= 'https://notify-api.line.me/api/notify'
-    def message = "ඞ ඞ ඞ ඞ ඞ ඞ ඞ \r\n   "
+    def message = "${jobName} Build #${buildNo} ${status} \r\n"
     sh"curl ${url} -H 'Authorization: Bearer ${token}' -F 'message=${message}'"
 }
 pipeline {
@@ -21,8 +21,7 @@ pipeline {
         notifyLINE("success")
     }
     failure{
-        notifyLINE("failed")
+        notifyLINE("failde")
         }
     }
 }
-

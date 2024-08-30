@@ -1,0 +1,26 @@
+services:
+  openssh-server:
+    image: lscr.io/linuxserver/openssh-server:latest
+    container_name: openssh-server
+    hostname: openssh-server
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - SUDO_ACCESS=false
+      - TZ=Asia/Bangkok
+      - PASSWORD_ACCESS=true
+      - USER_PASSWORD=password
+      - USER_NAME=linuxserver
+    volumes:
+      - ./openssh-server/config:/config
+      - ./sonar_data:/backup/sonar/sonar_data
+      - ./data_psql/backup:/backup/sonar/data_psql
+      - ./jenkins_home:/backup/jenkins/jenkins_home
+    ports:
+      - 2222:2222
+    restart: unless-stopped
+networks:
+  jenkins_network:
+    name: Jenkins
+    driver: bridge
+
